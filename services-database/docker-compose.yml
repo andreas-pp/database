@@ -1,0 +1,33 @@
+x-pg-common: &pg-common
+  image: postgres:16
+  user: root
+  restart: unless-stopped
+  expose:
+    - 5432
+  volumes:
+    - ./postgres-data:/var/lib/postgresql/data
+
+networks:
+  services-db:
+    name: services-db
+
+services:
+  postgres:
+    <<: *pg-common
+    container_name: services-postgres
+    environment:
+      # admin superuser instance ini
+      POSTGRES_USER: ${POSTGRES_ADMIN_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_ADMIN_PASSWORD}
+      # dipakai init/10-create-roles.sh (sekali, saat data dir kosong)
+      AIRFLOW_DB_PASSWORD: ${AIRFLOW_DB_PASSWORD}
+      SUPERSET_DB_PASSWORD: ${SUPERSET_DB_PASSWORD}
+      CONFIG_DB_PASSWORD: ${CONFIG_DB_PASSWORD}
+    networks:
+      - services-db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_ADMIN_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
