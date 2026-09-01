@@ -6,7 +6,7 @@ Satu instance Postgres untuk 3 service: **Airflow** (metadata), **Superset** (me
 
 | Path | Fungsi |
 |---|---|
-| `docker-compose.yml` | postgres:16 → container `services-postgres`, network `services-db` (shared ke stack lain) |
+| `docker-compose.yml` | postgres:18 → container `services-postgres`, network `services-db` (shared ke stack lain) |
 | `init/10-create-roles.sh` | auto-create role + database `airflow` / `superset` / `airflow_config` (sekali, saat data dir kosong) |
 | `config/airflow_config_init.sql` | DDL + seed schema `airflow_config` — jalankan manual setelah stack naik |
 

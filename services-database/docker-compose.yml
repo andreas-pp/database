@@ -1,5 +1,5 @@
 x-pg-common: &pg-common
-  image: postgres:16
+  image: postgres:18
   user: root
   restart: unless-stopped
   expose:
