@@ -2,12 +2,6 @@ x-pg-common: &pg-common
   image: postgres:18
   user: root
   restart: unless-stopped
-  expose:
-    - 5432
-
-networks:
-  services-db:
-    name: services-db
 
 services:
   postgres-airflow:
@@ -16,16 +10,10 @@ services:
     environment:
       POSTGRES_USER: airflow
       POSTGRES_PASSWORD: ${AIRFLOW_DB_PASSWORD}
+    ports:
+      - "5432:5432"
     volumes:
       - ./pg-airflow-data:/var/lib/postgresql/data
-    networks:
-      - services-db
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U airflow"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
 
   postgres-superset:
     <<: *pg-common
@@ -33,16 +21,10 @@ services:
     environment:
       POSTGRES_USER: superset
       POSTGRES_PASSWORD: ${SUPERSET_DB_PASSWORD}
+    ports:
+      - "5433:5432"
     volumes:
       - ./pg-superset-data:/var/lib/postgresql/data
-    networks:
-      - services-db
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U superset"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
 
   postgres-config:
     <<: *pg-common
@@ -50,13 +32,7 @@ services:
     environment:
       POSTGRES_USER: airflow_config
       POSTGRES_PASSWORD: ${CONFIG_DB_PASSWORD}
+    ports:
+      - "5434:5432"
     volumes:
       - ./pg-config-data:/var/lib/postgresql/data
-    networks:
-      - services-db
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U airflow_config"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
