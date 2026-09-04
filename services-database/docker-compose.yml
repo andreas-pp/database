@@ -11,7 +11,7 @@ services:
       POSTGRES_USER: airflow
       POSTGRES_PASSWORD: ${AIRFLOW_DB_PASSWORD}
     ports:
-      - "5432:5432"
+      - "30432:5432"
     volumes:
       - ./pg-airflow-data:/var/lib/postgresql/data
 
@@ -22,7 +22,7 @@ services:
       POSTGRES_USER: superset
       POSTGRES_PASSWORD: ${SUPERSET_DB_PASSWORD}
     ports:
-      - "5433:5432"
+      - "30433:5432"
     volumes:
       - ./pg-superset-data:/var/lib/postgresql/data
 
@@ -33,6 +33,6 @@ services:
       POSTGRES_USER: airflow_config
       POSTGRES_PASSWORD: ${CONFIG_DB_PASSWORD}
     ports:
-      - "5434:5432"
+      - "30444:5432"
     volumes:
       - ./pg-config-data:/var/lib/postgresql/data

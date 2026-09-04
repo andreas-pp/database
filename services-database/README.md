@@ -4,9 +4,9 @@
 
 | Container | Host port | DB / user |
 |---|---|---|
-| `postgres-airflow` | 5432 | airflow |
-| `postgres-superset` | 5433 | superset |
-| `postgres-config` | 5434 | airflow_config |
+| `postgres-airflow` | 30432 | airflow |
+| `postgres-superset` | 30433 | superset |
+| `postgres-config` | 30444 | airflow_config |
 
 ## Isi
 
@@ -33,9 +33,9 @@ State di bind mount lokal: `./pg-airflow-data`, `./pg-superset-data`, `./pg-conf
 
 ## Koneksi (dari host)
 
-- `postgresql://airflow:<AIRFLOW_DB_PASSWORD>@localhost:5432/airflow`
-- `postgresql://superset:<SUPERSET_DB_PASSWORD>@localhost:5433/superset`
-- `postgresql://airflow_config:<CONFIG_DB_PASSWORD>@localhost:5434/airflow_config`
+- `postgresql://airflow:<AIRFLOW_DB_PASSWORD>@localhost:30432/airflow`
+- `postgresql://superset:<SUPERSET_DB_PASSWORD>@localhost:30433/superset`
+- `postgresql://airflow_config:<CONFIG_DB_PASSWORD>@localhost:30444/airflow_config`
 
 Dari container stack lain: ganti `localhost` dengan host IP / `host.docker.internal`.
 
